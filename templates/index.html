@@ -4,30 +4,27 @@
     <meta charset="UTF-8">
     <title>Chat</title>
 </head>
-<body>
+<body style="text-align:center;font-size:150%">
     <h1>Chat app</h1>
     <form id="form">
-        <input type="text" name="msg">
+        <input type="text" name="msg" style="font-size:150%;">
     </form>
     <div id="msgs"></div>
     <script>
-        let url = `wss://${window.location.host}/ws/socket-server/`
+        let url = `ws://${window.location.host}/ws/socket-server/`
         const chat_socket = new WebSocket(url)
         chat_socket.onmessage = function(e){
             let msg = JSON.parse(e.data)
-            console.log(msg)
             if(msg.type == 'chat'){
                 let msgs = document.getElementById('msgs')
-                msgs.insertAdjacentHTML('beforeend', `<div><p>${msg.msg}</p></div>`)
+                msgs.insertAdjacentHTML('beforeend', `<div><p style="font-size:150%;">${msg.msg}</p></div>`)
             }
         }
         let form = document.getElementById("form")
         form.addEventListener('submit', (e)=>{
             e.preventDefault()
             let msg = e.target.msg.value
-            chat_socket.send(JSON.stringify({
-                'msg':msg
-            }))
+            chat_socket.send(JSON.stringify({'msg':msg}))
             form.reset()
         })
     </script>
