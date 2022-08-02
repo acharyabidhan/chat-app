@@ -10,19 +10,18 @@
     <form id="form">
         <input type="text" name="msg" style="font-size:150%;width: 80%;">
     </form>
-    <div id="msgs" style="overflow: scroll;height:400px;scroll-behavior: smooth;"></div>
+    <div id="msgs" style="overflow:scroll;height:400px;color: aliceblue;font-size:150%;"></div>
     <style>
         div::-webkit-scrollbar{display:none;}
     </style>
+    <script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script>
-        let url = `wss://${window.location.host}/ws/socket-server/`
+        let url = `ws://${window.location.host}/ws/socket-server/`
         const chat_socket = new WebSocket(url)
         chat_socket.onmessage = function(e){
             let msg = JSON.parse(e.data)
             if(msg.type == 'chat'){
-                let msgs = document.getElementById('msgs')
-                msgs.insertAdjacentHTML('beforeend', `<div><p style="font-size:150%;">${msg.msg}</p style="background-color:green;"></div>`)
-                msgs.scrollTop = msgs.scrollHeight;
+                $("#msgs").prepend($(`<p>${msg.msg}</p>`).fadeIn('fast'));
             }
         }
         let form = document.getElementById("form")
