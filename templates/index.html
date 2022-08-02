@@ -8,14 +8,14 @@
 <body style="text-align:center;font-size:150%;background-color: blueviolet;font-family: Arial, Helvetica, sans-serif;">
     <h1>Chat app</h1>
     <form id="form">
-        <input type="text" name="msg" style="font-size:150%;">
+        <input type="text" name="msg" style="font-size:150%;width: 80%;">
     </form>
     <div id="msgs" style="overflow: scroll;height:400px;scroll-behavior: smooth;"></div>
     <style>
         div::-webkit-scrollbar{display:none;}
     </style>
     <script>
-        let url = `wss://${window.location.host}/ws/socket-server/`
+        let url = `ws://${window.location.host}/ws/socket-server/`
         const chat_socket = new WebSocket(url)
         chat_socket.onmessage = function(e){
             let msg = JSON.parse(e.data)
