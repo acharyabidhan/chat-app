@@ -16,7 +16,7 @@
     </style>
     <script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script>
-        let url = `ws://${window.location.host}/ws/socket-server/`
+        let url = `wss://${window.location.host}/ws/socket-server/`
         const chat_socket = new WebSocket(url)
         chat_socket.onmessage = function(e){
             let msg = JSON.parse(e.data)
