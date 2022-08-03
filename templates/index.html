@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=no, width=device-width" />
-    <title>Chat</title>
+    <title>Commands</title>
 </head>
 <body style="text-align:center;font-size:150%;background-color: blueviolet;font-family: Arial, Helvetica, sans-serif;">
-    <h1>Chat app</h1>
+    <h1>Commands</h1>
     <form id="form">
         <input type="text" name="msg" style="font-size:150%;width: 80%;">
     </form>
@@ -21,7 +21,7 @@
         chat_socket.onmessage = function(e){
             let msg = JSON.parse(e.data)
             if(msg.type == 'chat'){
-                $("#msgs").prepend($(`<p>${msg.msg}</p>`).fadeIn('fast'));
+                $("#msgs").prepend($(`<p>${msg.msg}</p>`));
             }
         }
         let form = document.getElementById("form")
