@@ -1,1 +1,64 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="user-scalable=no, width=device-width" /><title>CWS</title></head><body style="text-align:center;font-size:120%;background-color: blueviolet;font-family: Arial, Helvetica, sans-serif;"><h1>Chat app</h1><form id="form"><input type="text" name="msg" style="font-size:120%;width: 80%;"></form><div id="msgs"></div><style>input{border-radius: 10px;}div{border: 10px solid white;border-radius: 10px;overflow-y: scroll;overflow-x:hidden;height:60vh;color: aliceblue;font-size:150%;margin-top: 1%;}div::-webkit-scrollbar{width: 10px;}div::-webkit-scrollbar-track{background-color: rgb(255, 255, 255);}div::-webkit-scrollbar-thumb{background: rgb(0, 0, 0);border-radius: 10px;}</style><script src="https://code.jquery.com/jquery-1.7.1.min.js"></script><script>let url = `wss://${window.location.host}/ws/socket-server/`;const chat_socket = new WebSocket(url);chat_socket.onmessage = function(e){let msg = JSON.parse(e.data);if(msg.type == "chat"){$("#msgs").prepend($(`<p>${msg.msg}</p>`).fadeIn("fast"));}};let form = document.getElementById("form");form.addEventListener('submit', (e)=>{e.preventDefault();let msg = e.target.msg.value;chat_socket.send(JSON.stringify({"type":"chat",'msg':msg}));form.reset()})</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <title>CWS</title>
+</head>
+
+<body style="text-align:center;font-size:120%;background-color: blueviolet;font-family: Arial, Helvetica, sans-serif;">
+    <h1>Chat app</h1>
+    <form id="form"><input type="text" name="msg" style="font-size:120%;width: 80%;"></form>
+    <div id="msgs"></div>
+    <style>
+        input {
+            border-radius: 10px;
+        }
+
+        div {
+            border: 10px solid white;
+            border-radius: 10px;
+            overflow: scroll;
+            height: 60vh;
+            color: aliceblue;
+            font-size: 150%;
+            margin-top: 1%;
+        }
+
+        div::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        div::-webkit-scrollbar-track {
+            background-color: rgb(255, 255, 255);
+        }
+
+        div::-webkit-scrollbar-thumb {
+            background: rgb(0, 0, 0);
+            border-radius: 10px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script>
+        let url = `wss://${window.location.host}/ws/socket-server/`;
+        const chat_socket = new WebSocket(url);
+        chat_socket.onmessage = function (e) {
+            let msg = JSON.parse(e.data);
+            if (msg.type == "chat") {
+                $("#msgs").prepend($(`<p>${msg.msg}</p>`).fadeIn("fast"));
+            }
+        };let form = document.getElementById("form");
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let msg = e.target.msg.value;
+            chat_socket.send(JSON.stringify({
+                "type": "chat",
+                "msg": msg
+                }));
+            form.reset()
+        })
+    </script>
+</body>
+
+</html>
